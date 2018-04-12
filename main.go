@@ -40,6 +40,7 @@ func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
 
 func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 	timeline, err := getTimeline(api)
+
 	if err != nil {
 		log.Error("Could not get timeline")
 	}
@@ -54,12 +55,10 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 				if err != nil {
 					log.Error("Failed to delete! ", err)
 				}
-			} else {
-				log.Info("No more tweets to delete.")
-				break
 			}
 		}
 	}
+	log.Info("No more tweets to delete.")
 
 }
 
