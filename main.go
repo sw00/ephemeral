@@ -29,7 +29,7 @@ func getenv(name string) string {
 
 func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
 	args := url.Values{}
-	args.Add("count", "3200")       // Twitter only returns most recent 20 tweets by default, so override
+	args.Add("count", "200")       // Twitter only returns most recent 20 tweets by default, so override
 	args.Add("include_rts", "true") // When using count argument, RTs are excluded, so include them as recommended
 	timeline, err := api.GetUserTimeline(args)
 	if err != nil {
