@@ -4,7 +4,7 @@
 
 You can use ephemeral to automatically delete all tweets from your timeline that are older than a certain number of hours that you can choose. For instance, you can ensure that your tweets are deleted after one week (168h), or one day (24h).
 
-The program will run once for each execution based on the trigger/schedule you set in AWS Lambda.
+The program will run once for each execution based on the trigger/schedule you set in AWS Lambda. It will delete up to 200 expired tweets (per-request limit set by Twitter's API) each run.
 
 # Twitter API
 
