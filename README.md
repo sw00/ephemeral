@@ -20,7 +20,7 @@ MAX_TWEET_AGE
 
 `MAX_TWEET_AGE` expects a value of hours, such as: `MAX_TWEET_AGE=72h`
 
-You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://vickylai.com/verbose/aws-lambda/). Skip to setting environment variables at [this link](https://vickylai.com/verbose/aws-lambda/#2-configure-your-function).
+You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/). Skip to setting environment variables at [this link](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/#2-configure-your-function).
 
 # update.sh
 
