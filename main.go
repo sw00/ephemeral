@@ -22,7 +22,7 @@ var (
 func getenv(name string) string {
 	v := os.Getenv(name)
 	if v == "" {
-		panic("Missing required environment variable " + name)
+		panic("missing required environment variable " + name)
 	}
 	return v
 }
@@ -42,24 +42,24 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 	timeline, err := getTimeline(api)
 
 	if err != nil {
-		log.Print("Could not get timeline")
+		log.Print("could not get timeline")
 	}
 	for _, t := range timeline {
 		createdTime, err := t.CreatedAtTime()
 		if err != nil {
-			log.Print("Couldn't parse time ", err)
+			log.Print("could not parse time ", err)
 		} else {
 			if time.Since(createdTime) > ageLimit {
 				_, err := api.DeleteTweet(t.Id, true)
 				log.Print("DELETED ID ", t.Id)
 				log.Print("TWEET ", createdTime, " - ", t.Text)
 				if err != nil {
-					log.Print("Failed to delete! ", err)
+					log.Print("failed to delete: ", err)
 				}
 			}
 		}
 	}
-	log.Print("No more tweets to delete.")
+	log.Print("no more tweets to delete")
 
 }
 
