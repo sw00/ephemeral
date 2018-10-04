@@ -3,6 +3,8 @@ package main
 import (
 	"net/url"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	"log"
@@ -17,6 +19,7 @@ var (
 	accessToken       = getenv("TWITTER_ACCESS_TOKEN")
 	accessTokenSecret = getenv("TWITTER_ACCESS_TOKEN_SECRET")
 	maxTweetAge       = getenv("MAX_TWEET_AGE")
+	whitelist         = strings.Split(getenv("WHITELIST"), ":")
 )
 
 func getenv(name string) string {
@@ -38,6 +41,17 @@ func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
 	return timeline, nil
 }
 
+func isWhitelisted(id int64) bool {
+	tweetId := strconv.FormatInt(id, 10)
+
+	for _, w := range whitelist {
+		if w == tweetId {
+			return true
+		}
+	}
+	return false
+}
+
 func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 	timeline, err := getTimeline(api)
 
@@ -49,7 +63,7 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 		if err != nil {
 			log.Print("could not parse time ", err)
 		} else {
-			if time.Since(createdTime) > ageLimit {
+			if time.Since(createdTime) > ageLimit && !isWhitelisted(t.Id) {
 				_, err := api.DeleteTweet(t.Id, true)
 				log.Print("DELETED ID ", t.Id)
 				log.Print("TWEET ", createdTime, " - ", t.Text)
