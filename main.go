@@ -19,7 +19,7 @@ var (
 	accessToken       = getenv("TWITTER_ACCESS_TOKEN")
 	accessTokenSecret = getenv("TWITTER_ACCESS_TOKEN_SECRET")
 	maxTweetAge       = getenv("MAX_TWEET_AGE")
-	whitelist         = strings.Split(getenv("WHITELIST"), ":")
+	whitelist         = getWhitelist()
 )
 
 func getenv(name string) string {
@@ -28,6 +28,16 @@ func getenv(name string) string {
 		panic("missing required environment variable " + name)
 	}
 	return v
+}
+
+func getWhitelist() []string {
+	v := os.Getenv("WHITELIST")
+
+	if v == "" {
+		return make([]string, 0)
+	}
+
+	return strings.Split(v, ":")
 }
 
 func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
