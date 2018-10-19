@@ -18,7 +18,17 @@ TWITTER_ACCESS_TOKEN_SECRET
 MAX_TWEET_AGE
 ```
 
-`MAX_TWEET_AGE` expects a value of hours, such as: `MAX_TWEET_AGE=72h`
+`MAX_TWEET_AGE` expects a value of hours, such as: `MAX_TWEET_AGE = 72h`
+
+Optionally, you can whitelist certain tweets and save them from deletion by setting the variable `WHITELIST` with the tweet's ID as the value. Find the ID as the string of numbers at the end of the tweet's URL, for example:
+
+https://twitter.com/hivickylai/status/`1052624100617785344`
+
+Set one ID to whitelist, or multiple IDs using the separator `:`:
+
+```
+WHITELIST = 1052624100617785344:1052942396034609152
+```
 
 You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/). Skip to setting environment variables at [this link](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/#2-configure-your-function).
 
