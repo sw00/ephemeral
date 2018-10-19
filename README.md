@@ -22,7 +22,7 @@ MAX_TWEET_AGE
 
 Optionally, you can whitelist certain tweets and save them from deletion by setting the variable `WHITELIST` with the tweet's ID as the value. Find the ID as the string of numbers at the end of the tweet's URL, for example:
 
-https://twitter.com/hivickylai/status/`1052624100617785344`
+https://twitter.com/hivickylai/status/ `1052624100617785344`
 
 Set one ID to whitelist, or multiple IDs using the separator `:`:
 
