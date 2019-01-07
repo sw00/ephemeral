@@ -22,6 +22,12 @@ var (
 	whitelist         = getWhitelist()
 )
 
+// MyResponse for AWS SAM
+type MyResponse struct {
+	StatusCode string `json:"StatusCode"`
+	Message string `json:"Body"`
+}
+
 func getenv(name string) string {
 	v := os.Getenv(name)
 	if v == "" {
@@ -52,10 +58,10 @@ func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
 }
 
 func isWhitelisted(id int64) bool {
-	tweetId := strconv.FormatInt(id, 10)
+	tweetID := strconv.FormatInt(id, 10)
 
 	for _, w := range whitelist {
-		if w == tweetId {
+		if w == tweetID {
 			return true
 		}
 	}
@@ -87,7 +93,7 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 
 }
 
-func ephemeral() {
+func ephemeral() (MyResponse, error) {
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
 	api := anaconda.NewTwitterApi(accessToken, accessTokenSecret)
@@ -97,6 +103,10 @@ func ephemeral() {
 
 	deleteFromTimeline(api, h)
 
+	return MyResponse{
+		Message: "no more tweets to delete",
+		StatusCode: "200",
+		}, nil
 }
 
 func main() {

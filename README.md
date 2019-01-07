@@ -24,7 +24,7 @@ Optionally, you can whitelist certain tweets and save them from deletion by sett
 
 https://twitter.com/hivickylai/status/ `1052624100617785344`
 
-Set one ID to whitelist, or multiple IDs using the separator `:`:
+Set one ID to whitelist, or multiple IDs using the separator `:` like so:
 
 ```
 WHITELIST = 1052624100617785344:1052942396034609152
