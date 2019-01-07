@@ -37,7 +37,7 @@ You can set these variables in AWS Lambda when you create your Lambda function. 
 This handy bash script is included to help you upload your function code to Lambda. It requires [AWS Command Line Interface](https://aws.amazon.com/cli/). To set up, do `pip install awscli` and follow these instructions for [Quick Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
 # License
-Copyright (C) 2018 Vicky Lai
+Copyright (C) 2018-2019 Vicky Lai
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
