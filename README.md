@@ -22,7 +22,7 @@ MAX_TWEET_AGE
 
 Optionally, you can whitelist certain tweets and save them from deletion by setting the variable `WHITELIST` with the tweet's ID as the value. Find the ID as the string of numbers at the end of the tweet's URL, for example:
 
-https://twitter.com/hivickylai/status/ `1052624100617785344`
+https://twitter.com/victoriadotdev/status/ `1052624100617785344`
 
 Set one ID to whitelist, or multiple IDs using the separator `:` like so:
 
@@ -30,14 +30,14 @@ Set one ID to whitelist, or multiple IDs using the separator `:` like so:
 WHITELIST = 1052624100617785344:1052942396034609152
 ```
 
-You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/). Skip to setting environment variables at [this link](https://vickylai.com/verbose/free-twitter-bot-aws-lambda/#2-configure-your-function).
+You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://victoria.dev/verbose/free-twitter-bot-aws-lambda/). Skip to setting environment variables at [this link](https://victoria.dev/verbose/free-twitter-bot-aws-lambda/#2-configure-your-function).
 
 # update.sh
 
 This handy bash script is included to help you upload your function code to Lambda. It requires [AWS Command Line Interface](https://aws.amazon.com/cli/). To set up, do `pip install awscli` and follow these instructions for [Quick Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
 # License
-Copyright (C) 2018-2019 Vicky Lai
+Copyright (C) 2018-2019 Victoria Lai
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
