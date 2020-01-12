@@ -11,6 +11,8 @@ import (
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/aws/aws-lambda-go/lambda"
+
+	"flag"
 )
 
 var (
@@ -25,7 +27,7 @@ var (
 // MyResponse for AWS SAM
 type MyResponse struct {
 	StatusCode string `json:"StatusCode"`
-	Message string `json:"Body"`
+	Message    string `json:"Body"`
 }
 
 func getenv(name string) string {
@@ -104,13 +106,21 @@ func ephemeral() (MyResponse, error) {
 	deleteFromTimeline(api, h)
 
 	return MyResponse{
-		Message: "no more tweets to delete",
+		Message:    "no more tweets to delete",
 		StatusCode: "200",
-		}, nil
+	}, nil
 }
 
 func main() {
+	plain := flag.Bool("plain", false, "Specify to run in plain script mode instead of inside of lambda. In this mode, the application will behave like a simple CLI app instead of being bound to AWS.")
+	flag.Parse()
 
-	lambda.Start(ephemeral)
-
+	if *plain {
+		_, err := ephemeral()
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		lambda.Start(ephemeral)
+	}
 }

@@ -36,6 +36,10 @@ You can set these variables in AWS Lambda when you create your Lambda function. 
 
 This handy bash script is included to help you upload your function code to Lambda. It requires [AWS Command Line Interface](https://aws.amazon.com/cli/). To set up, do `pip install awscli` and follow these instructions for [Quick Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
+# Running outside of lambda
+
+If you want to run ephemeral outside of lamda, then you can use the `--plain` command line argument in order to execute it as a plain old application.
+
 # License
 Copyright (C) 2018-2019 Victoria Drake
 
