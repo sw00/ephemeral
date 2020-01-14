@@ -38,6 +38,15 @@ You can set these variables in AWS Lambda when you create your Lambda function. 
 
 This handy bash script is included to help you upload your function code to Lambda. It requires [AWS Command Line Interface](https://aws.amazon.com/cli/). To set up, do `pip install awscli` and follow these instructions for [Quick Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
+## Run locally
+
+If you want to run ephemeral on the command line, set the expected environment variables in your shell environment. You can then run the program by using `go` and passing the `--local` flag:
+
+```sh
+cd ephemeral/
+go run main.go --local
+```
+
 ## License
 
 Copyright (C) 2018-2020 Victoria Drake
