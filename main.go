@@ -57,11 +57,11 @@ func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
 	return timeline, nil
 }
 
-func isWhitelisted(id int64) bool {
+func isWhitelisted(id int64, text string) bool {
 	tweetID := strconv.FormatInt(id, 10)
 
 	for _, w := range whitelist {
-		if w == tweetID {
+		if w == tweetID || strings.Contains(text, w) {
 			return true
 		}
 	}
@@ -79,10 +79,9 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 		if err != nil {
 			log.Print("could not parse time ", err)
 		} else {
-			if time.Since(createdTime) > ageLimit && !isWhitelisted(t.Id) {
+			if time.Since(createdTime) > ageLimit && !isWhitelisted(t.Id, t.Text) {
 				_, err := api.DeleteTweet(t.Id, true)
-				log.Print("DELETED ID ", t.Id)
-				log.Print("TWEET ", createdTime, " - ", t.Text)
+				log.Printf("DELETED TWEET (was %vh old): %v #%d - %s\n", time.Since(createdTime).Hours(), createdTime, t.Id, t.Text)
 				if err != nil {
 					log.Print("failed to delete: ", err)
 				}
