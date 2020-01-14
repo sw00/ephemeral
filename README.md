@@ -6,11 +6,11 @@ You can use ephemeral to automatically delete all tweets from your timeline that
 
 The program will run once for each execution based on the trigger/schedule you set in AWS Lambda. It will delete up to 200 expired tweets (per-request limit set by Twitter's API) each run.
 
-# Twitter API
+## Set up
 
 You will need to [create a new Twitter application and generate API keys](https://apps.twitter.com/). The program assumes the following environment variables are set:
 
-```
+```sh
 TWITTER_CONSUMER_KEY
 TWITTER_CONSUMER_SECRET
 TWITTER_ACCESS_TOKEN
@@ -24,20 +24,23 @@ Optionally, you can whitelist certain tweets and save them from deletion by sett
 
 https://twitter.com/victoriadotdev/status/ `1052624100617785344`
 
-Set one ID to whitelist, or multiple IDs using the separator `:` like so:
+You can also whitelist tweets using a substring contained in the tweet, for instance, the hashtag `#remember`.
 
+Set one value to whitelist, or multiple values using the separator `:` like so:
+
+```go
+WHITELIST = 1052624100617785344:1052942396034609152:#remember
 ```
-WHITELIST = 1052624100617785344:1052942396034609152
-```
 
-You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots on creating a Lambda function and uploading the code, read [this blog post](https://victoria.dev/verbose/free-twitter-bot-aws-lambda/). Skip to setting environment variables at [this link](https://victoria.dev/verbose/free-twitter-bot-aws-lambda/#2-configure-your-function).
+You can set these variables in AWS Lambda when you create your Lambda function. For a full walkthrough with screenshots for creating a Lambda function and uploading the code, read [this blog post](https://victoria.dev/blog/running-a-free-twitter-bot-on-aws-lambda/). Skip to setting environment variables at [this link](https://victoria.dev/blog/running-a-free-twitter-bot-on-aws-lambda/#2-configure-your-function).
 
-# update.sh
+## Upload with update.sh
 
 This handy bash script is included to help you upload your function code to Lambda. It requires [AWS Command Line Interface](https://aws.amazon.com/cli/). To set up, do `pip install awscli` and follow these instructions for [Quick Configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
-# License
-Copyright (C) 2018-2019 Victoria Drake
+## License
+
+Copyright (C) 2018-2020 Victoria Drake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
