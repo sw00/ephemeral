@@ -22,6 +22,7 @@ var (
 	accessTokenSecret = getenv("TWITTER_ACCESS_TOKEN_SECRET")
 	maxTweetAge       = getenv("MAX_TWEET_AGE")
 	whitelist         = getWhitelist()
+	deleteLikes       = resolveBoolEnvVar(getenv("DELETE_LIKES"))
 )
 
 // MyResponse for AWS SAM
@@ -46,6 +47,20 @@ func getWhitelist() []string {
 	}
 
 	return strings.Split(v, ":")
+}
+
+func resolveBoolEnvVar(value string) bool {
+	if value == "" {
+		return false
+	}
+
+	v, err := strconv.ParseBool(value)
+
+	if err != nil {
+		panic("cannot convert to boolean: " + value)
+	}
+
+	return v
 }
 
 func getTimeline(api *anaconda.TwitterApi) ([]anaconda.Tweet, error) {
@@ -94,6 +109,33 @@ func deleteFromTimeline(api *anaconda.TwitterApi, ageLimit time.Duration) {
 
 }
 
+func unfavoriteTweets(api *anaconda.TwitterApi, ageLimit time.Duration) {
+	args := url.Values{}
+	args.Add("count", "200")
+
+	favorites, err := api.GetFavorites(args)
+
+	if err != nil {
+		log.Print("failed to get favorites:", err)
+	}
+
+	for _, f := range favorites {
+		createdTime, err := f.CreatedAtTime()
+		if err != nil {
+			log.Print("could not parse time", err)
+		} else {
+			if time.Since(createdTime) > ageLimit && !isWhitelisted(f.Id, f.Text) {
+				_, err := api.Unfavorite(f.Id)
+				log.Printf("DELETED FAVORITE (was %vh old): %v #%d - %s\n", time.Since(createdTime).Hours(), createdTime, f.Id, f.Text)
+				if err != nil {
+					log.Print("failed to delete: ", err)
+				}
+			}
+		}
+	}
+
+}
+
 func ephemeral() (MyResponse, error) {
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
@@ -103,6 +145,10 @@ func ephemeral() (MyResponse, error) {
 	h, _ := time.ParseDuration(maxTweetAge)
 
 	deleteFromTimeline(api, h)
+
+	if deleteLikes {
+		unfavoriteTweets(api, h)
+	}
 
 	return MyResponse{
 		Message:    "no more tweets to delete",
